@@ -33,7 +33,6 @@ Este projeto é uma aplicação web que permite aos usuários autenticados gerar
    git clone https://github.com/seu-usuario/gerador-pdf-personalizado.git
    cd gerador-pdf-personalizado
    ```
-````
 
 2. **Instale as Dependências**
 
