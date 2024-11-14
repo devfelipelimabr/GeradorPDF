@@ -1,6 +1,3 @@
-Aqui está um exemplo de `README.md` para o projeto de **Gerador de PDF Personalizado** usando CodeIgniter 4.
-
-````markdown
 # Gerador de PDF Personalizado
 
 Este projeto é uma aplicação web que permite aos usuários autenticados gerar e baixar documentos PDF personalizados a partir de dados fornecidos pelo usuário. A aplicação foi desenvolvida utilizando o framework CodeIgniter 4, com suporte para geração de PDFs através da biblioteca Dompdf.
