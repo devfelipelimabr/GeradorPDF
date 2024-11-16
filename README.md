@@ -7,8 +7,6 @@ Este projeto é uma aplicação web que permite aos usuários autenticados gerar
 - **PHP** (CodeIgniter 4) - Backend e API RESTful
 - **MySQL** - Banco de dados para armazenamento de usuários e PDFs gerados
 - **Dompdf** - Biblioteca para geração de PDFs a partir de HTML
-- **JavaScript (jQuery)** - Para requisições AJAX e manipulação do frontend
-- **Bootstrap** - Interface de usuário responsiva
 
 ## Funcionalidades
 
