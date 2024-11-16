@@ -30,16 +30,8 @@ class PdfController extends BaseController
         // Recebe os dados para o PDF
         $data = $this->request->getJSON(true);
 
-        // Cria o conteúdo HTML para o PDF
-        $html = view('pdf_template', ['data' => $data]);
-
-        // Gera o PDF com Dompdf
-        $this->dompdf->loadHtml($html);
-        $this->dompdf->render();
-
-        // Define o caminho para salvar o PDF
-        $pdfPath = WRITEPATH . 'uploads/pdfs/' . uniqid(env('PROJECT_NAME')) . '.pdf';
-        file_put_contents($pdfPath, $this->dompdf->output());
+        // Gera o PDF e obtém o caminho
+        $pdfPath = $this->generatePdf($data);
 
         // Salva o caminho e os dados no banco de dados
         $pdfId = $this->pdfModel->insert([
@@ -67,8 +59,40 @@ class PdfController extends BaseController
                 ->setStatusCode(ResponseInterface::HTTP_FORBIDDEN);
         }
 
+        // Verifica se o arquivo PDF ainda existe no servidor
+        if (!file_exists($pdf->pdf_path)) {
+            // Recria o PDF usando o campo 'data' se o arquivo foi excluído
+            $data = json_decode($pdf->data, true);
+            $pdf->pdf_path = $this->generatePdf($data);
+
+            // Atualiza o caminho do PDF no banco de dados
+            $this->pdfModel->update($pdf_id, ['pdf_path' => $pdf->pdf_path]);
+        }
+
         // Fornece o PDF para download
         return $this->response->download($pdf->pdf_path, null)
-            ->setFileName(env('PROJECT_NAME') . '.pdf');
+            ->setFileName(env('PROJECT_NAME') . '_' . time() . '.pdf');
+    }
+
+    /**
+     * Função privada para geração de PDF.
+     *
+     * @param array $data Dados para popular o template do PDF.
+     * @return string Caminho onde o PDF foi salvo.
+     */
+    private function generatePdf(array $data): string
+    {
+        // Cria o conteúdo HTML para o PDF
+        $html = view('pdf_template', ['data' => $data]);
+
+        // Gera o PDF com Dompdf
+        $this->dompdf->loadHtml($html);
+        $this->dompdf->render();
+
+        // Define o caminho para salvar o PDF
+        $pdfPath = WRITEPATH . 'uploads/pdfs/' . uniqid(env('PROJECT_NAME')) . '.pdf';
+        file_put_contents($pdfPath, $this->dompdf->output());
+
+        return $pdfPath;
     }
 }
