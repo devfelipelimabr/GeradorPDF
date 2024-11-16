@@ -29,7 +29,7 @@ Este projeto é uma aplicação web que permite aos usuários autenticados gerar
 
    ```bash
    git clone https://github.com/devfelipelimabr/GeradorPDF.git
-   cd gerador-pdf-personalizado
+   cd GeradorPDF
    ```
 
 2. **Instale as Dependências**
