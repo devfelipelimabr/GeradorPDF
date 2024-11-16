@@ -10,11 +10,13 @@ class PdfController extends BaseController
 {
     private $session;
     private $pdfModel;
+    private $dompdf;
 
     public function __construct()
     {
         $this->session = service('session');
         $this->pdfModel = new PdfModel();
+        $this->dompdf = new Dompdf();
     }
 
     public function generate()
@@ -32,13 +34,12 @@ class PdfController extends BaseController
         $html = view('pdf_template', ['data' => $data]);
 
         // Gera o PDF com Dompdf
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->render();
+        $this->dompdf->loadHtml($html);
+        $this->dompdf->render();
 
         // Define o caminho para salvar o PDF
         $pdfPath = WRITEPATH . 'uploads/pdfs/' . uniqid(env('PROJECT_NAME')) . '.pdf';
-        file_put_contents($pdfPath, $dompdf->output());
+        file_put_contents($pdfPath, $this->dompdf->output());
 
         // Salva o caminho e os dados no banco de dados
         $pdfId = $this->pdfModel->insert([
@@ -58,8 +59,7 @@ class PdfController extends BaseController
                 ->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
         }
 
-        $pdfModel = new PdfModel();
-        $pdf = $pdfModel->find($pdf_id);
+        $pdf = $this->pdfModel->find($pdf_id);
 
         // Verifica se o PDF existe e pertence ao usuário
         if (!$pdf || $pdf->user_id !== $this->session->get('user_id')) {
