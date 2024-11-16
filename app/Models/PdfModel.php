@@ -10,7 +10,10 @@ class PdfModel extends Model
     protected $table = 'pdfs';
     protected $primaryKey = 'id';
     protected $returnType = Pdf::class;
-    protected $allowedFields = ['user_id', 'pdf_path', 'data', 'created_at'];
+    protected $allowedFields = ['user_id', 'pdf_path', 'data'];
+
+    // Dates
+    protected $useTimestamps = true;
 
     public function getPdfsByUser(int $userId)
     {
