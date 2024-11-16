@@ -28,7 +28,7 @@ Este projeto é uma aplicação web que permite aos usuários autenticados gerar
 1. **Clone o Repositório**
 
    ```bash
-   git clone https://github.com/seu-usuario/gerador-pdf-personalizado.git
+   git clone https://github.com/devfelipelimabr/GeradorPDF.git
    cd gerador-pdf-personalizado
    ```
 
@@ -219,4 +219,3 @@ Esse guia deve permitir que você interaja com a API usando o Postman de maneira
 Este projeto é licenciado sob a [MIT License](LICENSE).
 
 Este `README` inclui instruções detalhadas para instalação, configuração, uso e estrutura do projeto, além de exemplos de requisições para facilitar o entendimento de como interagir com a API.
-
